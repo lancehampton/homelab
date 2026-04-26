@@ -1,0 +1,44 @@
+---
+# Dockhand: deploy Dockhand container for Docker stack management
+# Docs: https://dockhand.pro/manual/
+# Uses matching paths as recommended by docs for stacks with relative volume paths
+- name: Deploy Dockhand
+  hosts: all
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Create Dockhand data directory
+      ansible.builtin.file:
+        path: "{{ dockhand_data_dir }}"
+        state: directory
+        owner: "{{ admin_user }}"
+        group: "{{ admin_user }}"
+        mode: '0755'
+
+    - name: Create Dockhand compose file
+      ansible.builtin.copy:
+        dest: "{{ dockhand_data_dir }}/compose.yaml"
+        owner: "{{ admin_user }}"
+        group: "{{ admin_user }}"
+        mode: '0644'
+        content: |
+          services:
+            dockhand:
+              image: fnsys/dockhand:latest
+              container_name: dockhand
+              restart: unless-stopped
+              ports:
+                - "{{ dockhand_port }}:3000"
+              volumes:
+                - /var/run/docker.sock:/var/run/docker.sock
+                - {{ dockhand_data_dir }}:{{ dockhand_data_dir }}
+              environment:
+                - DATA_DIR={{ dockhand_data_dir }}
+                - PUID=1000
+                - PGID=1000
+
+    - name: Start Dockhand
+      community.docker.docker_compose_v2:
+        project_src: "{{ dockhand_data_dir }}"
+        state: present

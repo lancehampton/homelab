@@ -1,0 +1,17 @@
+---
+# Full provision: run all playbooks in order
+# Usage: ansible-playbook site.yml
+- name: Bootstrap
+  ansible.builtin.import_playbook: playbooks/bootstrap.yml
+
+- name: Docker
+  ansible.builtin.import_playbook: playbooks/docker.yml
+
+- name: Cockpit
+  ansible.builtin.import_playbook: playbooks/cockpit.yml
+
+- name: Tailscale
+  ansible.builtin.import_playbook: playbooks/tailscale.yml
+
+- name: Dockhand
+  ansible.builtin.import_playbook: playbooks/dockhand.yml

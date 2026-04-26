@@ -1,0 +1,31 @@
+---
+# Cockpit: install and enable Cockpit web console
+# Docs: https://cockpit-project.org/running
+# Note: official docs recommend installing from backports for latest version,
+# but backports may not be available yet for new Ubuntu releases.
+# When available, add default_release: "{{ ansible_distribution_release }}-backports"
+# to the install task. Backports packages are NOT auto-updated by apt upgrade
+# or unattended-upgrades. To update Cockpit, re-run this playbook or manually:
+#   apt install -t <codename>-backports cockpit cockpit-*
+- name: Install Cockpit
+  hosts: all
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Install Cockpit packages
+      ansible.builtin.apt:
+        name:
+          - cockpit
+          - cockpit-networkmanager
+          - cockpit-storaged
+          - cockpit-packagekit
+          - cockpit-files
+        state: present
+        update_cache: true
+
+    - name: Enable and start Cockpit socket
+      ansible.builtin.systemd:
+        name: cockpit.socket
+        state: started
+        enabled: true

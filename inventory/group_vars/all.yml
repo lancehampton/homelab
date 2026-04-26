@@ -1,0 +1,10 @@
+---
+# System
+admin_user: lance
+
+# Tailscale
+tailscale_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
+
+# Dockhand
+dockhand_port: 3000
+dockhand_data_dir: /opt/dockhand

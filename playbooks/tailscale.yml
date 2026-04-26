@@ -1,0 +1,28 @@
+---
+# Tailscale: install and join tailnet for remote access
+# Docs: https://tailscale.com/docs/install/linux
+# Uses the official install script as recommended by Tailscale docs
+- name: Install Tailscale
+  hosts: all
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Install Tailscale via official script
+      ansible.builtin.shell:
+        cmd: curl -fsSL https://tailscale.com/install.sh | sh
+      args:
+        creates: /usr/bin/tailscale
+      changed_when: true
+
+    - name: Enable and start Tailscale service
+      ansible.builtin.systemd:
+        name: tailscaled
+        state: started
+        enabled: true
+
+    - name: Authenticate to Tailscale
+      ansible.builtin.command:
+        cmd: tailscale up --authkey={{ tailscale_authkey }}
+      changed_when: true
+      when: tailscale_authkey | length > 0
