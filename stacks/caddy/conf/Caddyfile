@@ -23,3 +23,8 @@ homeassistant.{$CLOUDFLARE_CNAME} {
   reverse_proxy http://host.docker.internal:8123
   import cloudflare
 }
+
+dockhand.{$CLOUDFLARE_CNAME} {
+  reverse_proxy http://host.docker.internal:3000
+  import cloudflare
+}
