@@ -71,7 +71,7 @@ resource "cloudflare_dns_record" "apps" {
 resource "cloudflare_dns_record" "caddy_proxy" {
   zone_id = data.cloudflare_zone.homelab.zone_id
   name    = "*.local.${var.cloudflare_domain}"
-  content = "apps.${var.ts_tailnet}"
+  content = "odin.${var.ts_tailnet}"
   ttl     = 1
   type    = "CNAME"
   comment = "Caddy reverse proxy for Tailscale"
