@@ -15,7 +15,7 @@
                   name: Dockhand
                   description: Docker Stack Manager
                   url: https://dockhand.${BASE_URL}
-                  icon: di:dockhand
+                  icon: di:dockhand.png
                   hide: false
                 birdnet-go:
                   name: BirdNET

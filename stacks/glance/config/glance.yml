@@ -2,7 +2,7 @@ server:
   assets-path: /app/assets
 
 branding:
-  logo-url: &logo_url https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Valknut-Symbol-triquetra.svg/540px-Valknut-Symbol-triquetra.svg.png
+  logo-url: &logo_url /assets/valknut.svg
   favicon-url: *logo_url
   app-icon-url: *logo_url
 
