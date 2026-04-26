@@ -11,4 +11,3 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - 3080:8080
-    env_file: .env
