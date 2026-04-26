@@ -1,0 +1,52 @@
+- name: Gaming
+  columns:
+    - size: small
+      widgets:
+        - type: twitch-channels
+          collapse-after: 15
+          sort-by: viewers
+          channels:
+            - cohhcarnage
+            - dansgaming
+            - bobross
+            - theprimeagen
+        - type: rss
+          title: This Week in Video Games
+          style: vertical-cards
+          limit: 25
+          collapse-after: 10
+          feeds:
+            - url: https://thisweekinvideogames.com/feed/
+              title: This Week in Video Games
+
+    - size: full
+      widgets:
+        - type: group
+          widgets:
+            - type: reddit
+              show-thumbnails: true
+              subreddit: veingame
+            - type: reddit
+              show-thumbnails: true
+              subreddit: snowrunner
+
+        - type: videos
+          style: grid-cards
+          collapse-after-rows: 3
+          channels:
+            - UCNvzD7Z-g64bPXxGzaQaa4g # gameranx
+            - UCZ7AeeVbyslLM_8-nVy2B8Q # Skill Up
+            - UC9PBzalIcEQCsiIkq36PyUA # Digital Foundry
+
+    - size: small
+      widgets:
+        - type: rss
+          title: Gaming News
+          style: vertical-cards
+          limit: 25
+          collapse-after: 10
+          feeds:
+            - url: https://www.videogameschronicle.com/feed/
+              title: Video Games Chronicle
+            - url: https://steamdeckhq.com/feed/
+              title: Steam Deck HQ
