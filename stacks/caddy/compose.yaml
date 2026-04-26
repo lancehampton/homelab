@@ -16,6 +16,9 @@ services:
       - CLOUDFLARE_CNAME=${CLOUDFLARE_CNAME}
     extra_hosts:
       - host.docker.internal:host-gateway
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
 volumes:
   caddy_data:
   caddy_config:
