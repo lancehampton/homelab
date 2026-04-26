@@ -1,0 +1,9 @@
+services:
+  cloudflared:
+    image: cloudflare/cloudflared
+    container_name: cloudflared
+    environment:
+      - TZ=America/New_York
+      - TUNNEL_TOKEN=${TOKEN}
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
