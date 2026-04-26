@@ -1,0 +1,25 @@
+(cloudflare) {
+  tls {
+    dns cloudflare {$CLOUDFLARE_API_TOKEN}
+  }
+}
+
+birdnet.{$CLOUDFLARE_CNAME} {
+  reverse_proxy http://host.docker.internal:8080
+  import cloudflare
+}
+
+home.{$CLOUDFLARE_CNAME} {
+  reverse_proxy http://host.docker.internal:3080
+  import cloudflare
+}
+
+readeck.{$CLOUDFLARE_CNAME} {
+  reverse_proxy http://host.docker.internal:8000
+  import cloudflare
+}
+
+homeassistant.{$CLOUDFLARE_CNAME} {
+  reverse_proxy http://host.docker.internal:8123
+  import cloudflare
+}

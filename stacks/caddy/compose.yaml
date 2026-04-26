@@ -1,0 +1,21 @@
+services:
+  caddy:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./conf:/etc/caddy
+      - ./site:/srv
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      - CLOUDFLARE_API_TOKEN=${CLOUDFLARE_API_TOKEN}
+      - CLOUDFLARE_CNAME=${CLOUDFLARE_CNAME}
+    extra_hosts:
+      - host.docker.internal:host-gateway
+volumes:
+  caddy_data:
+  caddy_config:
