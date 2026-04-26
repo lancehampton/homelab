@@ -11,3 +11,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - 3080:8080
+    environment:
+      - BASE_URL=${BASE_URL}
+      - GITHUB_PROJECT_URL=${GITHUB_PROJECT_URL}
+      - HARVEST_URL=${HARVEST_URL}
+      - QUICKBOOKS_URL=${QUICKBOOKS_URL}
