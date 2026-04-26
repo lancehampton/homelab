@@ -1,0 +1,17 @@
+# Docs: https://www.home-assistant.io/installation/linux#docker-compose
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: ghcr.io/home-assistant/home-assistant:stable
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    environment:
+      - TZ=America/New_York
+    volumes:
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    devices:
+      # SkyConnect USB Zigbee radio (stable path via /dev/serial/by-id/)
+      - /dev/serial/by-id/usb-Nabu_Casa_SkyConnect_v1.0_7418666a9be5ed119ff46b6262c613ac-if00-port0:/dev/ttyUSB0
