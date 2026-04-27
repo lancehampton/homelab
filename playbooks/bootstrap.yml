@@ -43,6 +43,17 @@
         group: "{{ admin_user }}"
         mode: '0755'
 
+    - name: Create data subdirectories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ admin_user }}"
+        group: "{{ admin_user }}"
+        mode: '0755'
+      loop:
+        - /data/games
+        - /data/birdnet
+
     - name: Set hostname
       ansible.builtin.hostname:
         name: "{{ hostname }}"

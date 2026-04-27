@@ -34,7 +34,7 @@ services:
       # - BIRDNET_RANGEFILTER_DEBUG=false           # Enable range filter debug logging (true/false)
     volumes:
       - ./config:/config
-      - ./data:/data
+      - /data/birdnet:/data
     # Mount HLS stream segment files directory as tmpfs (RAM disk)
     tmpfs:
       - /config/hls:exec,size=50M,uid=${BIRDNET_UID:-1000},gid=${BIRDNET_GID:-1000},mode=0755
