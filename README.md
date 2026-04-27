@@ -1,17 +1,17 @@
 # Homelab
 
-Ansible + Terraform config for a bare-metal Ubuntu Server 26.04 homelab.
+Ansible + OpenTofu config for a bare-metal Ubuntu Server 26.04 homelab.
 
 ## Stack
 
 - **OS:** Ubuntu Server 26.04 LTS
 - **Docker management:** [Dockhand](https://dockhand.pro/manual/)
-- **Server admin:** [Cockpit](https://cockpit-project.org/)
+- **Server management:** [Cockpit](https://cockpit-project.org/), SSH
 - **Remote access:** [Tailscale](https://tailscale.com/)
 - **Reverse proxy:** [Caddy](https://caddyserver.com/) with Cloudflare DNS
 - **External access:** Cloudflare Zero Trust Tunnel
 - **Provisioning:** Ansible
-- **Infrastructure:** Terraform (Cloudflare + Tailscale)
+- **Infrastructure:** [OpenTofu](https://opentofu.org/) (Cloudflare + Tailscale)
 
 ## Nodes
 
@@ -48,15 +48,15 @@ ansible-playbook playbooks/dockhand.yml
 
 The first run will prompt for SSH and sudo passwords (`ansible.cfg` has `ask_pass` and `become_ask_pass` enabled).
 
-## Terraform
+## Infrastructure
 
 Cloudflare DNS, Zero Trust tunnel, and access policies are managed in `infra/`.
 
 ```bash
 cd infra
-terraform init
-terraform plan
-terraform apply
+tofu init
+tofu plan
+tofu apply
 ```
 
 Requires a `terraform.tfvars` file (gitignored) with Cloudflare and Tailscale credentials.
@@ -112,5 +112,5 @@ homelab/
 │   ├── tailscale.yml
 │   └── dockhand.yml
 ├── stacks/              # Docker compose stacks (deployed via Dockhand)
-└── infra/               # Terraform (Cloudflare + Tailscale)
+└── infra/               # OpenTofu (Cloudflare + Tailscale)
 ```
