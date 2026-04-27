@@ -8,3 +8,6 @@ tailscale_authkey: "{{ lookup('env', 'TAILSCALE_AUTHKEY') }}"
 # Dockhand
 dockhand_port: 3000
 dockhand_data_dir: /opt/dockhand
+
+# Cockpit
+cockpit_origin: "{{ lookup('env', 'CLOUDFLARE_CNAME') }}"

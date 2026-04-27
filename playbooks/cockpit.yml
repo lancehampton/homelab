@@ -24,8 +24,62 @@
         state: present
         update_cache: true
 
+    # Workaround: PackageKit checks NetworkManager for connectivity, but
+    # systemd-networkd manages our interfaces so NM reports "offline".
+    # Ref: https://cockpit-project.org/faq.html#error-message-about-being-offline
+    - name: Tell NetworkManager to manage all devices (fixes PackageKit offline error)
+      ansible.builtin.copy:
+        dest: /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
+        mode: '0644'
+        content: |
+          [keyfile]
+          unmanaged-devices=none
+      notify: Restart NetworkManager
+
+    - name: Flush handlers to ensure NetworkManager is restarted
+      ansible.builtin.meta: flush_handlers
+
+    - name: Check if dummy NM connection already exists
+      ansible.builtin.command:
+        cmd: nmcli -t -f NAME con show
+      register: nmcli_connections
+      changed_when: false
+
+    - name: Create dummy NM connection for PackageKit connectivity
+      ansible.builtin.command:
+        cmd: nmcli con add type dummy con-name fake ifname fake0 ip4 192.0.2.2/24 gw4 192.0.2.1
+      when: "'fake' not in nmcli_connections.stdout_lines"
+
     - name: Enable and start Cockpit socket
       ansible.builtin.systemd:
         name: cockpit.socket
         state: started
         enabled: true
+
+    - name: Validate cockpit_origin is set
+      ansible.builtin.assert:
+        that:
+          - cockpit_origin | length > 0
+        fail_msg: "cockpit_origin is empty — set CLOUDFLARE_CNAME env var before running"
+
+    - name: Configure Cockpit for reverse proxy access
+      ansible.builtin.copy:
+        dest: /etc/cockpit/cockpit.conf
+        mode: '0644'
+        content: |
+          [WebService]
+          Origins = https://cockpit.{{ cockpit_origin }} wss://cockpit.{{ cockpit_origin }}
+          ProtocolHeader = X-Forwarded-Proto
+          AllowUnencrypted = true
+      notify: Restart cockpit
+
+  handlers:
+    - name: Restart cockpit
+      ansible.builtin.systemd:
+        name: cockpit.socket
+        state: restarted
+
+    - name: Restart NetworkManager
+      ansible.builtin.systemd:
+        name: NetworkManager
+        state: restarted

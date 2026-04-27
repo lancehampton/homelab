@@ -26,6 +26,12 @@
           - net-tools
         state: present
 
+    - name: Disable networkd-dispatcher (noisy with Docker veth interfaces)
+      ansible.builtin.systemd:
+        name: networkd-dispatcher
+        state: stopped
+        enabled: false
+
     - name: Set timezone
       community.general.timezone:
         name: America/New_York
