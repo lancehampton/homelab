@@ -36,11 +36,11 @@
               sites:
                 - title: Home Assistant
                   url: https://homeassistant.${BASE_URL}
-                  check-url: http://localhost:8123
+                  check-url: http://host.docker.internal:8123
                   icon: di:home-assistant
                 - title: Cockpit
                   url: https://cockpit.${BASE_URL}
-                  check-url: https://localhost:9090
+                  check-url: https://host.docker.internal:9090
                   icon: di:cockpit
                   allow-insecure: true
 

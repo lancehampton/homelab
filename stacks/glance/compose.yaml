@@ -16,3 +16,5 @@ services:
       - GITHUB_PROJECT_URL=${GITHUB_PROJECT_URL}
       - HARVEST_URL=${HARVEST_URL}
       - QUICKBOOKS_URL=${QUICKBOOKS_URL}
+    extra_hosts:
+      - host.docker.internal:host-gateway
