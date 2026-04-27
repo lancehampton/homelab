@@ -36,9 +36,9 @@
       community.general.timezone:
         name: America/New_York
 
-    - name: Set gamedata mount ownership
+    - name: Set data mount ownership
       ansible.builtin.file:
-        path: /gamedata
+        path: /data
         owner: "{{ admin_user }}"
         group: "{{ admin_user }}"
         mode: '0755'

@@ -1,0 +1,30 @@
+services:
+  enshrouded-tailscale:
+    image: tailscale/tailscale:latest
+    container_name: enshrouded-tailscale
+    hostname: enshrouded
+    environment:
+      - TS_AUTHKEY=${TS_AUTHKEY}
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+    volumes:
+      - /var/lib/tailscale/enshrouded:/var/lib/tailscale
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+    restart: unless-stopped
+
+  enshrouded:
+    image: mornedhels/enshrouded-server:latest
+    container_name: enshrouded
+    restart: unless-stopped
+    network_mode: service:enshrouded-tailscale
+    volumes:
+      - /data/games/enshrouded:/opt/enshrouded
+    env_file: .env
+    environment:
+      - SERVER_ROLE_0_PASSWORD=${ADMIN_PASSWORD}
+      - SERVER_ROLE_1_PASSWORD=${FRIEND_PASSWORD}
+    depends_on:
+      - enshrouded-tailscale

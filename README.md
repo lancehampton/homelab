@@ -73,8 +73,8 @@ Configured manually during/after OS install — not managed by Ansible.
 
 1 TB NVMe SSD (/dev/nvme1n1)
   VG: data
-  ├── docker LV   200 GB  → /var/lib/docker  (images, layers, build cache)
-  ├── gamedata LV  500 GB  → /gamedata        (game server data)
+  ├── docker LV    200 GB  → /var/lib/docker  (images, layers, build cache)
+  ├── storage LV   500 GB  → /data            (game servers, birdnet, etc.)
   └── ~230 GB free                            (future use)
 ```
 
@@ -84,15 +84,15 @@ To recreate the 1 TB layout from scratch:
 sudo pvcreate /dev/nvme1n1
 sudo vgcreate data /dev/nvme1n1
 sudo lvcreate -L 200G -n docker data
-sudo lvcreate -L 500G -n gamedata data
+sudo lvcreate -L 500G -n storage data
 sudo mkfs.ext4 /dev/data/docker
-sudo mkfs.ext4 /dev/data/gamedata
-sudo mkdir -p /gamedata
-sudo mount /dev/data/gamedata /gamedata
-sudo chown lance:lance /gamedata
+sudo mkfs.ext4 /dev/data/storage
+sudo mkdir -p /data
+sudo mount /dev/data/storage /data
+sudo chown lance:lance /data
 # Add to /etc/fstab:
 #   /dev/data/docker   /var/lib/docker ext4 defaults 0 2
-#   /dev/data/gamedata /gamedata       ext4 defaults 0 2
+#   /dev/data/storage  /data           ext4 defaults 0 2
 ```
 
 ## Project Structure

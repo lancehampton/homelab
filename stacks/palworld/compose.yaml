@@ -1,0 +1,44 @@
+services:
+  palworld:
+    image: thijsvanloef/palworld-server-docker:latest
+    depends_on:
+      - palworld-tailscale
+    network_mode: "service:palworld-tailscale"
+    restart: unless-stopped
+    container_name: palworld-server
+    stop_grace_period: 30s # Set to however long you are willing to wait for the container to gracefully stop
+    # ports:
+      # - 8211:8211/udp
+      # - 27015:27015/udp
+      # - 8212:8212/tcp  # Port for REST API if REST_API_ENABLED: true
+    env_file: .env
+    environment:
+      - SERVER_PASSWORD=${SERVER_PASSWORD}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+    volumes:
+      - /data/games/palworld:/palworld/
+
+  palworld-tailscale:
+    image: tailscale/tailscale:latest
+    container_name: palworld-tailscale
+    hostname: palworld
+    environment:
+      - TS_AUTHKEY=${TS_AUTHKEY}
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+    volumes:
+      - /var/lib/tailscale/palworld:/var/lib/tailscale
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+    restart: unless-stopped
+    networks:
+      - palworld_nw
+    ports:
+      - "8211:8211/udp"
+      - "8212:27015/udp"
+networks:
+  palworld_nw:
+    name: palworld_nw
+

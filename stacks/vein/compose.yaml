@@ -1,0 +1,38 @@
+services:
+  vein:
+    build: .
+    depends_on:
+      - vein-tailscale
+    network_mode: "service:vein-tailscale"
+    restart: unless-stopped
+    container_name: vein-server
+    # ports:
+    #   - "7777:${GAME_PORT:-7777}/udp"
+    volumes:
+      - /data/games/vein:/home/steam/vein-dedicated-server
+    env_file: .env
+    environment:
+      - SERVER_PASSWORD=${SERVER_PASSWORD}
+  vein-tailscale:
+    image: tailscale/tailscale:latest
+    container_name: vein-tailscale
+    hostname: vein
+    environment:
+      - TS_AUTHKEY=${TS_AUTHKEY}
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+    volumes:
+      - /var/lib/tailscale/vein:/var/lib/tailscale
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+    restart: unless-stopped
+    networks:
+      - vein_nw
+    ports:
+      - "7777:7777/udp"
+      - "7778:27015/udp"
+networks:
+  vein_nw:
+    name: vein_nw
