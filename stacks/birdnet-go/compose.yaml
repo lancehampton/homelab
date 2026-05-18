@@ -12,8 +12,8 @@ services:
       # Optional: uncomment to configure via environment variables
       # BirdNET Configuration
       - BIRDNET_LOCALE=en-us # Locale code (2-10 chars, e.g., "en" or "en-us")
-      - BIRDNET_LATITUDE=${BIRDNET_LATITUDE:-40.346}    # Valid range: -90.0 to 90.0
-      - BIRDNET_LONGITUDE=${BIRDNET_LONGITUDE:-176.5402} # Valid range: -180.0 to 180.0
+      - BIRDNET_LATITUDE=${BIRDNET_LATITUDE}    # Valid range: -90.0 to 90.0
+      - BIRDNET_LONGITUDE=${BIRDNET_LONGITUDE} # Valid range: -180.0 to 180.0
       # - BIRDNET_SENSITIVITY=1.0                   # Valid range: 0.1 to 1.5 (higher = more sensitive)
       # - BIRDNET_THRESHOLD=0.8                     # Valid range: 0.0 to 1.0 (confidence threshold)
       # - BIRDNET_OVERLAP=1.5                       # Valid range: 0.0 to 2.9 seconds (audio chunk overlap)
