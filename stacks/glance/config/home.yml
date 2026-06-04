@@ -46,12 +46,16 @@
 
         - type: group
           widgets:
-            - type: reddit
-              subreddit: selfhosted
+            - type: rss
+              title: r/selfhosted
               collapse-after: 7
-            - type: reddit
-              subreddit: homelab
+              feeds:
+                - url: https://www.reddit.com/r/selfhosted/new.rss
+            - type: rss
+              title: r/homelab
               collapse-after: 7
+              feeds:
+                - url: https://www.reddit.com/r/homelab/new.rss
 
     - size: small
       widgets:

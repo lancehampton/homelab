@@ -23,12 +23,14 @@
       widgets:
         - type: group
           widgets:
-            - type: reddit
-              show-thumbnails: true
-              subreddit: duneawakening
-            - type: reddit
-              show-thumbnails: true
-              subreddit: snowrunner
+            - type: rss
+              title: r/duneawakening
+              feeds:
+                - url: https://www.reddit.com/r/duneawakening/new.rss
+            - type: rss
+              title: r/snowrunner
+              feeds:
+                - url: https://www.reddit.com/r/snowrunner/new.rss
 
         - type: videos
           style: grid-cards
