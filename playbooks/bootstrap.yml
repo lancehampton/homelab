@@ -33,6 +33,18 @@
         state: stopped
         enabled: false
 
+    - name: Mark wifi interfaces as not required for network-online.target
+      ansible.builtin.copy:
+        dest: /etc/systemd/network/10-wifi-optional.network
+        mode: '0644'
+        content: |
+          [Match]
+          Type=wlan
+
+          [Link]
+          RequiredForOnline=no
+      notify: Reload systemd daemon
+
     - name: Set timezone
       community.general.timezone:
         name: America/New_York
@@ -153,6 +165,10 @@
         default: deny
 
   handlers:
+    - name: Reload systemd daemon
+      ansible.builtin.systemd:
+        daemon_reload: true
+
     - name: Restart sshd
       ansible.builtin.systemd:
         name: sshd
