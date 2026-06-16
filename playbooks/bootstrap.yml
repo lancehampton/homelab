@@ -1,6 +1,7 @@
 ---
 # Bootstrap: initial server setup (user, SSH hardening, base packages)
-# Run first with: ansible-playbook playbooks/bootstrap.yml --ask-pass --ask-become-pass
+# First run (before SSH key is deployed): ansible-playbook playbooks/bootstrap.yml --ask-pass
+# Subsequent runs: ansible-playbook playbooks/bootstrap.yml
 - name: Bootstrap server
   hosts: all
   become: true
@@ -66,6 +67,13 @@
         append: true
         create_home: true
 
+    - name: Configure passwordless sudo for admin user
+      ansible.builtin.copy:
+        content: "{{ admin_user }} ALL=(ALL) NOPASSWD: ALL\n"
+        dest: "/etc/sudoers.d/{{ admin_user }}"
+        mode: '0440'
+        validate: 'visudo -cf %s'
+
     - name: Deploy SSH authorized key
       ansible.posix.authorized_key:
         user: "{{ admin_user }}"
@@ -86,11 +94,11 @@
         line: 'PubkeyAuthentication yes'
       notify: Restart sshd
 
-    - name: Keep password auth enabled (emergency access)
+    - name: Harden SSH - disable password auth (use console for emergency access)
       ansible.builtin.lineinfile:
         path: /etc/ssh/sshd_config
         regexp: '^#?PasswordAuthentication'
-        line: 'PasswordAuthentication yes'
+        line: 'PasswordAuthentication no'
       notify: Restart sshd
 
     # Docs: https://ubuntu.com/server/docs/how-to/software/automatic-updates/
