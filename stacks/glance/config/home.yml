@@ -1,9 +1,22 @@
 - name: Home
-  width: wide
-
   columns:
+    - size: small
+      widgets:
+        - type: twitch-channels
+          collapse-after: 15
+          sort-by: viewers
+          channels:
+            - cohhcarnage
+            - dansgaming
+            - bobross
+            - theprimeagen
+
     - size: full
       widgets:
+        - type: search
+          autofocus: true
+          search-engine: duckduckgo
+
         - type: group
           title: Services
           widgets:
@@ -43,6 +56,14 @@
                   check-url: https://host.docker.internal:9090
                   icon: di:cockpit
                   allow-insecure: true
+
+        - type: videos
+          style: grid-cards
+          collapse-after-rows: 3
+          channels:
+            - UCNvzD7Z-g64bPXxGzaQaa4g # gameranx
+            - UCZ7AeeVbyslLM_8-nVy2B8Q # Skill Up
+            - UC9PBzalIcEQCsiIkq36PyUA # Digital Foundry
 
     - size: small
       widgets:
