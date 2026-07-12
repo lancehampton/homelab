@@ -21,17 +21,6 @@
 
     - size: full
       widgets:
-        - type: group
-          widgets:
-            - type: rss
-              title: r/duneawakening
-              feeds:
-                - url: https://www.reddit.com/r/duneawakening/new.rss
-            - type: rss
-              title: r/snowrunner
-              feeds:
-                - url: https://www.reddit.com/r/snowrunner/new.rss
-
         - type: videos
           style: grid-cards
           collapse-after-rows: 3

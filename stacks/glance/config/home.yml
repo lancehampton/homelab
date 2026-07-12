@@ -44,19 +44,6 @@
                   icon: di:cockpit
                   allow-insecure: true
 
-        - type: group
-          widgets:
-            - type: rss
-              title: r/selfhosted
-              collapse-after: 7
-              feeds:
-                - url: https://www.reddit.com/r/selfhosted/new.rss
-            - type: rss
-              title: r/homelab
-              collapse-after: 7
-              feeds:
-                - url: https://www.reddit.com/r/homelab/new.rss
-
     - size: small
       widgets:
         - type: bookmarks
@@ -90,9 +77,6 @@
                 - title: YouTube
                   url: https://www.youtube.com/
                   icon: si:youtube.svg
-                - title: Reddit
-                  url: https://old.reddit.com/
-                  icon: si:reddit.svg
                 - title: Twitch
                   url: https://www.twitch.tv/
                   icon: si:twitch.png
