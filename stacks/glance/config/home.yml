@@ -2,14 +2,40 @@
   columns:
     - size: small
       widgets:
-        - type: twitch-channels
-          collapse-after: 15
-          sort-by: viewers
-          channels:
-            - cohhcarnage
-            - dansgaming
-            - bobross
-            - theprimeagen
+        - type: bookmarks
+          groups:
+            - title: Work
+              links:
+                - title: GitHub Project
+                  url: ${GITHUB_PROJECT_URL}
+                  icon: di:github-light.svg
+                - title: Harvest
+                  url: ${HARVEST_URL}
+                  icon: di:bitcoin.svg
+                - title: Quickbooks
+                  url: ${QUICKBOOKS_URL}
+                  icon: si:quickbooks
+
+            - title: Tools
+              links:
+                - title: Kagi Assistant
+                  url: https://kagi.com/assistant
+                  icon: di:kagi.svg
+                - title: IT Tools
+                  url: https://it-tools.tech/
+                  icon: di:it-tools-light.svg
+                - title: Selfh.st
+                  url: https://selfh.st/apps/
+                  icon: di:selfh-st.svg
+
+            - title: Entertainment
+              links:
+                - title: YouTube
+                  url: https://www.youtube.com/
+                  icon: si:youtube.svg
+                - title: Twitch
+                  url: https://www.twitch.tv/
+                  icon: si:twitch.png
 
     - size: full
       widgets:
@@ -67,37 +93,11 @@
 
     - size: small
       widgets:
-        - type: bookmarks
-          groups:
-            - title: Work
-              links:
-                - title: GitHub Project
-                  url: ${GITHUB_PROJECT_URL}
-                  icon: di:github-light.svg
-                - title: Harvest
-                  url: ${HARVEST_URL}
-                  icon: di:bitcoin.svg
-                - title: Quickbooks
-                  url: ${QUICKBOOKS_URL}
-                  icon: si:quickbooks
-
-            - title: Tools
-              links:
-                - title: Kagi Assistant
-                  url: https://kagi.com/assistant
-                  icon: di:kagi.svg
-                - title: IT Tools
-                  url: https://it-tools.tech/
-                  icon: di:it-tools-light.svg
-                - title: Selfh.st
-                  url: https://selfh.st/apps/
-                  icon: di:selfh-st.svg
-
-            - title: Entertainment
-              links:
-                - title: YouTube
-                  url: https://www.youtube.com/
-                  icon: si:youtube.svg
-                - title: Twitch
-                  url: https://www.twitch.tv/
-                  icon: si:twitch.png
+        - type: twitch-channels
+          collapse-after: 15
+          sort-by: viewers
+          channels:
+            - cohhcarnage
+            - dansgaming
+            - bobross
+            - theprimeagen
