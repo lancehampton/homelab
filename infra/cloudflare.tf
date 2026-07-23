@@ -93,14 +93,14 @@ resource "cloudflare_zero_trust_access_application" "apps" {
   ]
 }
 
-
-resource "cloudflare_zero_trust_tunnel_cloudflared_config" "routes" {
-  account_id = var.cloudflare_account_id
-  tunnel_id  = var.cloudflare_tunnel_id
-  config = {
-    ingress = local.ingress_rules
-  }
-}
+# Commented out until I need external access to the specified apps
+# resource "cloudflare_zero_trust_tunnel_cloudflared_config" "routes" {
+#   account_id = var.cloudflare_account_id
+#   tunnel_id  = var.cloudflare_tunnel_id
+#   config = {
+#     ingress = local.ingress_rules
+#   }
+# }
 
 resource "cloudflare_zero_trust_access_policy" "admin" {
   account_id = var.cloudflare_account_id
